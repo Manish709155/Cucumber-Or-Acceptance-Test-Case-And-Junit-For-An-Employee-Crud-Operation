@@ -1,0 +1,51 @@
+1. Arrange – Set up the test
+You prepare everything your test needs:
+
+Create objects or mocks
+
+Stub method behaviors (like when(...).thenReturn(...))
+
+Initialize input data
+
+Example:
+
+Employee emp = new Employee();
+emp.setId(1L);
+emp.setName("Manish");
+when(employeeRepository.findById(1L)).thenReturn(Optional.of(emp));
+
+
+2. Act – Execute the code you're testing
+You call the method or functionality you're testing.
+
+Example:
+Optional<Employee> result = employeeService.findByEmployeeId(1L);
+
+3. Assert – Verify the result
+You check the result of the execution using assertions:
+
+assertEquals(...)
+
+assertNotNull(...)
+
+assertTrue(...)
+
+verify(...) (Mockito interaction check)
+
+Example:
+
+assertTrue(result.isPresent());
+assertEquals("Manish", result.get().getName());
+
+
+--------------- Important-----------
+
+Why we stub:
+Speed: No real DB access
+
+Isolation: Test only the service logic, not the DB
+
+Control: You define exactly what the repository returns
+
+means
+“When someone calls employeeRepository.findById(1L) during the test, don’t hit the real database — just return this mock employee
